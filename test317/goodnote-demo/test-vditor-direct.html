@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vditor 测试</title>
+  <script src="https://cdn.jsdelivr.net/npm/vditor@3.11.2/dist/index.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vditor@3.11.2/dist/index.min.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+    }
+    #editor {
+      height: 500px;
+      width: 100%;
+      border: 1px solid #ccc;
+    }
+    .dark #editor {
+      border-color: #666;
+    }
+  </style>
+</head>
+<body>
+  <h1>Vditor 测试</h1>
+  <button onclick="changeTheme()">切换主题</button>
+  <div id="editor"></div>
+  <script>
+    let vditorInstance
+    let isDark = false
+
+    const initEditor = () => {
+      console.log('初始化编辑器...')
+      if (vditorInstance) {
+        vditorInstance.destroy()
+      }
+
+      vditorInstance = new Vditor('editor', {
+        height: 500,
+        width: '100%',
+        mode: 'wysiwyg',
+        theme: isDark ? 'dark' : 'classic',
+        placeholder: '输入 Markdown 内容...',
+        value: '# 测试标题\n\n这是**粗体**文本。',
+        toolbar: [
+          'headings',
+          'bold',
+          'italic',
+          'strike',
+          '|',
+          'list',
+          'ordered-list',
+          'check',
+          '|',
+          'quote',
+          'code',
+          'inline-code',
+          '|',
+          'link',
+          'table',
+          '|',
+          'undo',
+          'redo'
+        ],
+        input: (value) => {
+          console.log('输入:', value)
+          document.getElementById('output').textContent = value
+        }
+      })
+    }
+
+    const changeTheme = () => {
+      isDark = !isDark
+      initEditor()
+    }
+
+    initEditor()
+  </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marked 测试</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+    .test-result {
+      background: #f5f5f5;
+      padding: 15px;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Marked.js 测试</h1>
+  <div id="output"></div>
+
+  <script type="module">
+    import { marked } from './node_modules/marked/lib/marked.esm.js';
+
+    const testMarkdown = `# 测试标题
+
+这是**粗体**文本，这是*斜体*文本。
+
+## 二级标题
+
+- 列表项 1
+- 列表项 2
+
+\`\`\`javascript
+console.log('Hello');
+\`\`\`
+`;
+
+    console.log('marked 对象:', marked);
+    console.log('marked.parse:', typeof marked.parse);
+    console.log('marked.parseSync:', typeof marked.parseSync);
+
+    const outputDiv = document.getElementById('output');
+
+    try {
+      // 测试 marked.parse
+      const result = marked.parse(testMarkdown);
+      console.log('marked.parse 返回类型:', typeof result);
+      console.log('marked.parse 结果:', result);
+
+      if (result instanceof Promise) {
+        result.then(html => {
+          console.log('Promise 解析结果:', html);
+          outputDiv.innerHTML = '<h2>测试结果 (异步)</h2><div class="test-result">' + html + '</div>';
+        });
+      } else {
+        outputDiv.innerHTML = '<h2>测试结果 (同步)</h2><div class="test-result">' + result + '</div>';
+      }
+    } catch (error) {
+      console.error('错误:', error);
+      outputDiv.innerHTML = '<h2>错误</h2><div class="test-result" style="color: red;">' + error.message + '</div>';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vditor 测试</title>
+  <script src="https://cdn.jsdelivr.net/npm/vditor@3.11.2/dist/index.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vditor@3.11.2/dist/index.min.css">
+  <style>
+    #editor {
+      height: 500px;
+      width: 100%;
+    }
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <h1>Vditor 测试页面</h1>
+  <div id="editor"></div>
+  <div id="output"></div>
+
+  <script>
+    const vditor = new Vditor('editor', {
+      height: 500,
+      width: '100%',
+      mode: 'wysiwyg',
+      theme: 'classic',
+      placeholder: '输入 Markdown 内容...',
+      value: '# 测试标题\n\n这是**粗体**文本。',
+
+      toolbar: [
+        'headings',
+        'bold',
+        'italic',
+        'strike',
+        '|',
+        'list',
+        'ordered-list',
+        'check',
+        '|',
+        'quote',
+        'code',
+        'inline-code',
+        '|',
+        'link',
+        'table',
+        '|',
+        'undo',
+        'redo'
+      ],
+
+      input: (value) => {
+        document.getElementById('output').textContent = value
+        console.log('输入:', value)
+      }
+    })
+
+    console.log('Vditor 实例:', vditor)
+  </script>
+</body>
+</html>
